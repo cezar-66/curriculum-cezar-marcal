@@ -1,0 +1,424 @@
+<html>
+
+<head>
+  <base href="/">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f5f5f5;
+    }
+
+    .animate-fade-in {
+      animation: fadeIn 1s ease-in;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .skill-bar {
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .skill-progress {
+      height: 100%;
+      background: #3b82f6;
+      border-radius: 4px;
+      transition: none;
+    }
+
+    @media print {
+      @page {
+        margin: 0;
+        size: auto;
+      }
+
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      #content-to-pdf {
+        background: white;
+      }
+
+      .url {
+        display: none !important;
+      }
+
+      .date {
+        display: none !important;
+      }
+
+      header {
+        display: block !important;
+      }
+
+      header .w-32.h-32 img,
+      header h1,
+      header a[href^="mailto"],
+      header a[href^="https://wa.me"] {
+        display: block !important;
+      }
+
+      footer {
+        display: none !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header .flex {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      header .w-32 {
+        margin-bottom: 1.5rem;
+      }
+
+      header .flex-wrap {
+        justify-content: center;
+      }
+
+      .skill-bar {
+        height: 10px;
+        /* Slightly larger on mobile for better touch targets */
+      }
+
+      #content-to-pdf {
+        padding: 1rem;
+        margin: 0.5rem;
+      }
+
+      .border-l-4 {
+        border-left-width: 3px;
+        padding-left: 0.75rem;
+      }
+
+      h1 {
+        font-size: 1.875rem;
+        /* Smaller font size on mobile */
+      }
+
+      h2 {
+        font-size: 1.25rem;
+      }
+
+      .text-2xl {
+        font-size: 1.5rem;
+      }
+
+      .grid {
+        gap: 0.75rem;
+      }
+
+      .p-8 {
+        padding: 1rem;
+      }
+
+      .my-8 {
+        margin: 0.5rem 0;
+      }
+
+      .space-y-6>*+* {
+        margin-top: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header .flex-wrap {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .fixed.top-4.right-4 {
+        top: 0.5rem;
+        right: 0.5rem;
+      }
+
+      button {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+      }
+    }
+
+    .w-32.h-32 img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app" class="min-h-screen bg-gray-50">
+
+    <div id="content-to-pdf" class="max-w-5xl mx-auto p-8 bg-white shadow-lg my-8 rounded-lg animate-fade-in">
+      <div class="flex justify-end mb-4">
+        <button @click="downloadPDF"
+          class="bg-blue-600 text-white px-3 py-1.5 rounded-lg hover:bg-blue-700 flex items-center gap-1 text-sm no-print">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          Download PDF
+        </button>
+      </div>
+
+      <!-- Header Section -->
+      <header class="border-b pb-6 mb-6">
+        <div class="flex items-start gap-6">
+          <div class="w-32 h-32 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
+            <img src="eu.jpg" alt="Profile photo" class="w-full h-full object-cover">
+          </div>
+          <div>
+            <h1 class="text-4xl font-bold text-gray-800">Cezar Mar&#xe7;al</h1>
+            <h2 class="text-xl text-blue-600 mt-2">Programador Java Senior</h2>
+
+            <div class="mt-4 flex flex-wrap gap-4">
+              <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span>Pato Branco, Brasil</span>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <a href="mailto:cezarmarcal@live.com" class="text-blue-600 hover:underline">cezarmarcal@live.com</a>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                <a href="https://wa.me/5546991240178" class="hover:text-blue-600 transition-colors">(46) 9 9124-0178</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Profile Section -->
+      <section class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Perfil</h3>
+        <p class="text-gray-600 leading-relaxed">
+          Tenho 28 anos e sou graduado em An&#xe1;lise e Desenvolvimento de Sistemas. Desde 2017/2018, venho trabalhando
+          com desenvolvimento de software, com foco principal na linguagem Java. Minha trajet&#xf3;ria inclui projetos
+          de diversas escalas, abrangendo &#xe1;reas como sistemas banc&#xe1;rios, agropecu&#xe1;rios e financeiros,
+          al&#xe9;m de projetos de menor porte.
+
+          Minha especializa&#xe7;&#xe3;o concentra-se em Java. Tenho trabalhado predominantemente com Java 8, bem como
+          com vers&#xf5;es mais recentes, como Java 11, 17 e 21. Dentro desse contexto, possuo amplo conhecimento em
+          diversos frameworks amplamente utilizados, como Spring Boot, Hibernate, Thymeleaf, JPA e JDBC. Tamb&#xe9;m
+          estou familiarizado com v&#xe1;rios padr&#xf5;es de design, como SOLID, Builder, MVC entre outros.
+
+          Al&#xe9;m disso, tenho algum conhecimento em stacks de front-end, como HTML, CSS, JS e TypeScript, Angular nas
+          vers&#xf5;es 15, 16, 17 (embora n&#xe3;o seja minha especialidade). Por fim, possuo conhecimentos relevantes
+          em DevOps, sendo familiarizado com ferramentas essenciais como Docker, Kubernetes e Linux, al&#xe9;m de outras
+          tecnologias comumente empregadas no cotidiano de empresas de software.
+
+          Sou uma pessoa simples, que procura trazer empatia e sempre manter um ambiente agrad&#xe1;vel tanto para estar
+          quanto para trabalhar. Sou apaixonado por tecnologia, especialmente pela &#xe1;rea de programa&#xe7;&#xe3;o.
+          Abaixo conto um pouco mais das minhas experi&#xea;ncias at&#xe9; aqui!
+        </p>
+      </section>
+
+      <!-- Skills Section -->
+      <section class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Compet&#xea;ncias</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div v-for="skill in skills" :key="skill.name" class="bg-gray-50 p-4 rounded-lg">
+            <div class="flex justify-between mb-2">
+              <span class="font-medium text-gray-700">{{ skill.name }}</span>
+              <span class="text-gray-600">{{ skill.level }}%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" :style="{ width: skill.level + &apos;%&apos;}"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Experience Section -->
+      <section class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Experi&#xea;ncia Profissional</h3>
+
+        <div class="space-y-6">
+          <div v-for="job in experience" :key="job.company" class="border-l-4 border-blue-500 pl-4">
+            <h4 class="font-semibold text-lg text-gray-800">{{ job.role }}</h4>
+            <div class="text-blue-600 font-medium">{{ job.company }}</div>
+            <div class="text-gray-600 text-sm mb-2">{{ job.period }}</div>
+            <p class="text-gray-700">{{ job.description }}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Education Section -->
+      <section class="mb-8">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Forma&#xe7;&#xe3;o</h3>
+        <div class="bg-gray-50 p-4 rounded-lg mb-4">
+          <div class="flex items-center gap-2 mb-2">
+            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14v7" />
+            </svg>
+            <h4 class="font-semibold text-lg text-gray-800">Engenharia de Software</h4>
+          </div>
+          <div class="text-blue-600">Unidep, Pato Branco BR</div>
+          <div class="text-gray-600">Fevereiro 2019 &#x2014; Dezembro de 2021</div>
+        </div>
+
+        <div class="bg-gray-50 p-4 rounded-lg mb-4">
+          <div class="flex items-center gap-2 mb-2">
+            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4z" />
+            </svg>
+            <h4 class="font-semibold text-lg text-gray-800">Ingl&#xea;s</h4>
+          </div>
+          <div class="text-blue-600">Jumper Idiomas, Pato Branco BR</div>
+          <div class="text-gray-600">Em andamento - 1 ano</div>
+        </div>
+
+        <div class="mt-4">
+          <div class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <h4 class="font-semibold text-lg text-gray-800">Refer&#xea;ncias</h4>
+          </div>
+          <p class="text-gray-600">Refer&#xea;ncias dispon&#xed;veis mediante solicita&#xe7;&#xe3;o</p>
+        </div>
+      </section>
+
+      <!-- Languages & Hobbies Section -->
+      <section class="mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="text-2xl font-semibold text-gray-800 mb-4">Idiomas</h3>
+            <div class="space-y-4">
+              <div v-for="language in languages" :key="language.name" class="bg-gray-50 p-4 rounded-lg">
+                <div class="flex justify-between mb-2">
+                  <span class="font-medium text-gray-700">{{ language.name }}</span>
+                  <span class="text-gray-600">{{ language.level }}%</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-progress" :style="{ width: language.level + &apos;%&apos;}"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-2xl font-semibold text-gray-800 mb-4">Hobbies</h3>
+            <div class="bg-gray-50 p-4 rounded-lg">
+              <ul class="list-disc list-inside space-y-2 text-gray-700">
+                <li v-for="hobby in hobbies" :key="hobby">{{ hobby }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>const {
+      createApp
+    } = Vue;
+    createApp({
+      data() {
+        return {
+          skills: [{
+            name: 'Java',
+            level: 95
+          }, {
+            name: 'Spring Boot',
+            level: 90
+          }, {
+            name: 'HTML & CSS',
+            level: 85
+          }, {
+            name: 'JavaScript',
+            level: 80
+          }, {
+            name: 'Git',
+            level: 85
+          }, {
+            name: 'SQL',
+            level: 88
+          }, {
+            name: 'Docker',
+            level: 75
+          }, {
+            name: 'Angular',
+            level: 70
+          }],
+          experience: [{
+            role: 'Desenvolvedor Java Senior',
+            company: 'CWI Software',
+            period: 'Setembro 2023 - Presente',
+            description: 'Atualmente, desempenho a função de desenvolvedor Fullstack (Java e Angular 17) na empresa CWI Software, onde atuo em regime de gestão alocamento no cliente (Casas Bahias). Minha rotina como desenvolvedor fullstack sênior está centrada na abordagem de atender às demandas de um sistema financeiro que oferece serviços como cartões de crédito, seguros e outros serviços. No decorrer do meu dia de trabalho, aplico metodologias ágeis, como Kanban e Scrum, participando de cerimônias como Daily e Planning, seguindo os rituais da metodologia ágil. As tecnologias com as quais trabalho diariamente incluem Java 11 e 17, Spring Boot e suas camadas, RabbitMQ, Microserviços, APIs, PostgreSQL, Docker, VDI, e outras tecnologias relacionadas.'
+          }, {
+            role: 'Desenvolvedor Java Pleno',
+            company: 'DOCKET BRASIL',
+            period: 'Agosto 2020 - Junho 2023',
+            description: 'Minha passagem pela Docket Brasil foi incrivelmente enriquecedora. Trabalhar em um ambiente que combinava um projeto monolítico bem estruturado com microserviços me permitiu explorar novas abordagens. Participei de um projeto que simplificava a entrega de documentos para várias instituições, usando uma arquitetura baseada em RESTful API e integrações com RabbitMQ. Minhas habilidades incluíam Java (versões 8, 11 e 17), Spring Boot, Spring MVC, Thymeleaf, JPA, Flyway Migration e Postgres, além de frontend com JS, CSS, jQuery e React. Essa experiência ampliou meu conhecimento técnico e minha colaboração em equipes multidisciplinares.'
+          }, {
+            role: 'Desenvolvedor Java Junior',
+            company: 'Softfocus',
+            period: 'Junho 2019 - Agosto 2020',
+            description: 'Na Softfocus, foi onde dei os primeiros passos no mundo da programação, imergindo profundamente em tecnologias como JAVA 8, POSTGRES, JPA, HIBERNATE, JSP, EXT JS, STRUTS 2 e JS. Durante essa fase, não só aprendi sobre essas tecnologias, mas também descobri o funcionamento do desenvolvimento, como um todo. Além disso, familiarizei-me com ferramentas essenciais, como o Jira, que tornaram o nosso fluxo de trabalho mais ágil, o Scrum, e também adotei práticas de DevOps. Minha jornada na Softfocus também me permitiu colaborar com colegas excepcionais e engajados em projetos desafadores. Essas experiências fortaleceram minhas habilidades de trabalho em equipe e a capacidade de resolver problemas de forma eficiente. Sou extremamente grato pelo tempo que passei na Softfocus, pois desempenhou um papel fundamental no meu crescimento profissional e me preparou para abraçar os desafios que viriam dali para frente no campo do desenvolvimento de software.'
+          }],
+          languages: [{
+            name: 'Português',
+            level: 100
+          }, {
+            name: 'Inglês',
+            level: 75
+          }],
+          hobbies: ['Praticar exercícios', 'Games', 'Paraquedismo', 'Música', 'Jogar xadrez']
+        };
+      },
+      methods: {
+        async downloadPDF() {
+          const elementsToHide = document.querySelectorAll('.no-print');
+          elementsToHide.forEach(el => el.style.display = 'none');
+          try {
+            window.print();
+          } finally {
+            elementsToHide.forEach(el => el.style.display = '');
+          }
+        }
+      }
+    }).mount('#app');</script>
+</body>
+
+</html>
