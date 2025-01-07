@@ -21,7 +21,7 @@
 
     @keyframes fadeIn {
       0% {
-        opacity: 0; 
+        opacity: 0;
       }
 
       100% {
@@ -79,6 +79,17 @@
 
       footer {
         display: none !important;
+      }
+
+      .contacts-wrapper {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 2rem !important;
+        justify-content: flex-start !important;
+      }
+
+      .contacts-wrapper>div {
+        display: flex !important;
       }
     }
 
@@ -165,6 +176,14 @@
       object-fit: cover;
       border-radius: 50%;
     }
+
+    .contacts-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: flex-start;
+      align-items: center;
+    }
   </style>
 </head>
 
@@ -187,13 +206,14 @@
       <header class="border-b pb-6 mb-6">
         <div class="flex items-start gap-6">
           <div class="w-32 h-32 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
-            <img src="eu.jpg" alt="Profile photo" class="w-full h-full object-cover">
+            <img src="eu.jpg" alt="Profile photo"
+              class="w-full h-full object-cover">
           </div>
           <div>
             <h1 class="text-4xl font-bold text-gray-800">Cezar Mar&#xe7;al</h1>
             <h2 class="text-xl text-blue-600 mt-2">Programador Java Senior</h2>
 
-            <div class="mt-4 flex flex-wrap gap-4">
+            <div class="mt-4 contacts-wrapper">
               <div class="flex items-center gap-2">
                 <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -228,10 +248,10 @@
       <section class="mb-8">
         <h3 class="text-2xl font-semibold text-gray-800 mb-4">Perfil</h3>
         <p class="text-gray-600 leading-relaxed">
-          Tenho 28 anos e sou graduado em An&#xe1;lise e Desenvolvimento de Sistemas. Desde 2017/2018, venho trabalhando
-          com desenvolvimento de software, com foco principal na linguagem Java. Minha trajet&#xf3;ria inclui projetos
-          de diversas escalas, abrangendo &#xe1;reas como sistemas banc&#xe1;rios, agropecu&#xe1;rios e financeiros,
-          al&#xe9;m de projetos de menor porte.
+          Tenho 28 anos e sou graduado em Engenharia de software. Desde 2017/2018, venho trabalhando com desenvolvimento
+          de software, com foco principal na linguagem Java. Minha trajet&#xf3;ria inclui projetos de diversas escalas,
+          abrangendo &#xe1;reas como sistemas banc&#xe1;rios, agropecu&#xe1;rios e financeiros, al&#xe9;m de projetos de
+          menor porte.
 
           Minha especializa&#xe7;&#xe3;o concentra-se em Java. Tenho trabalhado predominantemente com Java 8, bem como
           com vers&#xf5;es mais recentes, como Java 11, 17 e 21. Dentro desse contexto, possuo amplo conhecimento em
@@ -303,7 +323,7 @@
             </svg>
             <h4 class="font-semibold text-lg text-gray-800">Ingl&#xea;s</h4>
           </div>
-          <div class="text-blue-600">Jumper Idiomas, Pato Branco BR</div>
+          <div class="text-blue-600">JUMPER Idiomas, Pato Branco BR</div>
           <div class="text-gray-600">Em andamento - 1 ano</div>
         </div>
 
